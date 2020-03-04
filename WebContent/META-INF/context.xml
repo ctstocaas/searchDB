@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/searchDB">
+    <Resource name="jdbc/searchDB" auth="Container" type="javax.sql.DataSource"
+        maxActive="100" maxIdle="30" maxWait="10000"
+        username="root" password="Passw0rd" driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://35.225.86.73:3307/MyNewDatabase"/>
+</Context>
