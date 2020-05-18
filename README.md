@@ -1,5 +1,12 @@
-# SearchDB - A sample three tier application setup.
-This is a sample three tier application that uses Apache Web Server, Tomcat Application Server and MySQL DB server. To setup this application we need to setup servers in following sequence:
+# SearchDB - A sample three tier application setup
+This is a sample three tier application that uses Apache Web Server, Tomcat Application Server and MySQL DB server. 
+The application looks like following:
+###Home page:
+![Home page](https://github.com/ctstocaas/searchDB/blob/master/SampleDB-home.JPG)
+###Search result page:
+![Search Result](https://github.com/ctstocaas/searchDB/blob/master/SampleDB-Search.JPG)
+
+To setup this application we need to setup servers in following sequence:
 1. MySQL Server - Installation and DB creation
 2. Tomcat Server - Installation, application deployment and connection to MySQL server
 3. Apache Web Server - Installation and connection to Tomcat server
