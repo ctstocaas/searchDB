@@ -3,13 +3,18 @@ This is a sample three tier application that uses Apache Web Server, Tomcat Appl
 1. MySQL Server - Installation and DB creation
 2. Tomcat Server - Installation, application deployment and connection to MySQL server
 3. Apache Web Server - Installation and connection to Tomcat server
+This setup is specifically applicable to Ubuntu 16.04. 
+A small VM is sufficient for this setup.
+Create three VMs with Ubuntu 16.04 with 10GB storage and minimal CPU and RAM.
 
 # MySQL Server setup
 ## Step 1: Install MySQL Server
 Login to SQL server and execute following command
-sudo apt-get update
 
-sudo apt-get install mysql-server
+`$ sudo apt-get update`
+
+`$ sudo apt-get install mysql-server`
+
 If prompted for password enter “Passw0rd” as the password for user ID “root”
 Enable MySQL service to start at system reboot:
 
