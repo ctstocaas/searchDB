@@ -1,3 +1,9 @@
+# SearchDB - A sample three tier application setup.
+This is a sample three tier application that uses Apache Web Server, Tomcat Application Server and MySQL DB server. To setup this application we need to setup servers in following sequence:
+1. MySQL Server - Installation and DB creation
+2. Tomcat Server - Installation, application deployment and connection to MySQL server
+3. Apache Web Server - Installation and connection to Tomcat server
+
 # MySQL Server setup
 ## Step 1: Install MySQL Server
 Login to SQL server and execute following command
@@ -59,50 +65,6 @@ CREATE TABLE Subject (
 ```
 Now the DB is ready to be used by the application. Make a note of MySQL server IP and port (default: 3306). Use these connection details in application context.xml file when application is deployed on Tomcat.
 
-# Apache Installation
-## Step 1: Install Apache Web Server
-
-### Install apache on Ubuntu v16.04:
-
-```
-$ apt-get update && \
-  apt-get install -yq \
-  apache2 && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
-```
-Enable the service to auto start at system reboot:
-
-`$ sudo systemctl enable apache2`
-
-## Step 2: Install Tomcat connector (mod_jk)
-
-### Install mod_jk Tomcat connector on Ubuntu v16.04:
-
-```
-$ apt-get update && \
-  apt-get install -yq \
-  libapache2-mod-jk && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
-```
-
-## Step 3: Configure Apache and mod_jk
-
-1.	Place the attached **jk.conf** file to /etc/apache2/mods-available directory:
-2.	Place the attached **workers.properties** file to /etc/apache2/mods-available/workers.properties directory:
-Edit this property worker.router.host=192.0.1.6 in the file to IP address of the Tomcat server
-3.	Place the attached **000-default.conf** file to /etc/apache2/sites-enabled/000-default.conf directory:
- 
-Restart apache webserver:
-
-`$ sudo systemctl restart apache2`
-
-Verify whether its started successfully:
-
-`$ sudo systemctl status apache2`
-
- 
 # Tomcat Installation
 ## Step 1: Install Java
 Tomcat requires Java to be installed on the server so that any Java web application code can be executed. We can satisfy that requirement by installing OpenJDK with apt-get.
@@ -251,15 +213,92 @@ Download the latest application war file attached above.
 Rename the war file to SearchDB.war
 Place the file in 
 
-`<tomcat-installation-directory>/webapp`
+`/opt/tomcat/webapp`
 
-Application will be deployed automatically by Tomcat
+The application will be deployed by Tomcat automatically.
+
+Note: This application will not work until MySQL server is up and running and the IP address of the MySQL server is updated in the application configuration file on Tomcat server. 
+
+## Step 8: Configure SearchDB application on Tomcat to connect to MySQL server
+Open the context.xml file at following location:
+
+`/opt/tomcat/webapp/SearchDB/META-INF/context.xml`
+Update MySQL IP address and port as following:
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/searchDB">
+    <Resource name="jdbc/searchDB" auth="Container" type="javax.sql.DataSource"
+        maxActive="100" maxIdle="30" maxWait="10000"
+        username="root" password="Passw0rd" driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://***10.132.0.2:3306***/MyNewDatabase"/>
+</Context>
+```
+
+
+# Apache Installation
+## Step 1: Install Apache Web Server
+
+### Install apache on Ubuntu v16.04:
+
+```
+$ apt-get update && \
+  apt-get install -yq \
+  apache2 && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
+```
+Enable the service to auto start at system reboot:
+
+`$ sudo systemctl enable apache2`
+
+## Step 2: Install Tomcat connector (mod_jk)
+
+### Install mod_jk Tomcat connector on Ubuntu v16.04:
+
+```
+$ apt-get update && \
+  apt-get install -yq \
+  libapache2-mod-jk && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
+```
+
+## Step 3: Configure Apache and mod_jk
+
+1.	Place the attached **jk.conf** file to /etc/apache2/mods-available directory:
+2.	Place the attached **workers.properties** file to /etc/apache2/mods-available/workers.properties directory:
+Edit this property **worker.router.host=192.0.1.6** in the file to IP address of the Tomcat server
+```
+#/etc/apache2/mods-available/workers.properties
+# The dvanced router LB worker
+  worker.list=router,worker1
+  worker.router.type=ajp13
+  worker.router.host=10.128.0.3
+  worker.router.port=8009
+
+  
+  # Define the first member worker
+  worker.worker1.type=ajp13
+  worker.worker1.host=10.128.0.3
+  worker.worker1.port=8009
+  # Define preferred failover node for worker1
+#  worker.worker1.redirect=worker2
+```
+
+3.	Place the attached **000-default.conf** file to /etc/apache2/sites-enabled/000-default.conf directory:
+ 
+Restart apache webserver:
+
+`$ sudo systemctl restart apache2`
+
+Verify whether its started successfully:
+
+`$ sudo systemctl status apache2`
+
 Access the application on IP address of Apache server with following URL
 
 `http://<apache-web-server-IP>:80/SearchDB/index.jsp`
-
-Note: This application will not work until MqSQL server is up and running and the IP address of the MySQL server is updated in the application configuration file. 
-
-
 
 
