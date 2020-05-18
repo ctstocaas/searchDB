@@ -11,6 +11,7 @@ To setup this application we need to setup servers in following sequence:
 1. MySQL Server - Installation and DB creation
 2. Tomcat Server - Installation, application deployment and connection to MySQL server
 3. Apache Web Server - Installation and connection to Tomcat server
+
 This setup is specifically applicable to Ubuntu 16.04. 
 A small VM is sufficient for this setup.
 Create three VMs with Ubuntu 16.04 with 10GB storage and minimal CPU and RAM.
