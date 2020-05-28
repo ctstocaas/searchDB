@@ -227,7 +227,7 @@ Download the latest application war file attached above.
 Rename the war file to SearchDB.war
 Place the file in 
 
-`/opt/tomcat/webapp`
+`/opt/tomcat/webapps`
 
 The application will be deployed by Tomcat automatically.
 
@@ -237,7 +237,7 @@ Note: This application will not work until MySQL server is up and running and th
 Open the context.xml file at following location:
 
 `/opt/tomcat/webapp/SearchDB/META-INF/context.xml`
-Update MySQL IP address and port as following:
+Update MySQL IP address and port in "url" in the following Context element:
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -246,7 +246,7 @@ Update MySQL IP address and port as following:
     <Resource name="jdbc/searchDB" auth="Container" type="javax.sql.DataSource"
         maxActive="100" maxIdle="30" maxWait="10000"
         username="root" password="Passw0rd" driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://***10.132.0.2:3306***/MyNewDatabase"/>
+        url="jdbc:mysql://10.132.0.2:3306/MyNewDatabase"/>
 </Context>
 ```
 
