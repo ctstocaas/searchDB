@@ -236,7 +236,7 @@ Note: This application will not work until MySQL server is up and running and th
 ## Step 8: Configure SearchDB application on Tomcat to connect to MySQL server
 Open the context.xml file at following location:
 
-`/opt/tomcat/webapp/SearchDB/META-INF/context.xml`
+`/opt/tomcat/webapps/SearchDB/META-INF/context.xml`
 Update MySQL IP address and port in "url" in the following Context element:
 
 ```
