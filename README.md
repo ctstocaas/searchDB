@@ -29,7 +29,7 @@ Enable MySQL service to start at system reboot:
 
 `$ sudo systemctl restart mysql`
 ### Enable access to MySQL from remote servers: 
-By default the MySQL installation allow connection to the MySQL server from the localhost only. But we need to connect to this server remotely. To enable that, edit the MySQL configuration file /etc/mysql/mysql.conf.d as following:
+By default the MySQL installation allow connection to the MySQL server from the localhost only. But we need to connect to this server remotely. To enable that, edit the MySQL configuration file /etc/mysql/mysql.conf.d/mysqld.cnf as following:
 
 Find the property “bind-address=xxx.xxx.xxx.xxx” in the file and comment or remove this line.
 Save and exit.
